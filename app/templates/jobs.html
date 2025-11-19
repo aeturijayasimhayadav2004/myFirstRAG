@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h2>Matches</h2>
+    <table>
+        <thead>
+            <tr><th>Title</th><th>Company</th><th>Location</th><th>Similarity</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+            <tr>
+                <td>{{ match.title }}</td>
+                <td>{{ match.company }}</td>
+                <td>{{ match.location }}</td>
+                <td>{{ '%.2f'|format(match.similarity_score) }}</td>
+                <td>{{ match.status }}</td>
+            </tr>
+            <tr class="details"><td colspan="5">
+                <strong>Reason:</strong> {{ match.reason }}<br/>
+                <strong>Cover Letter:</strong>
+                <pre>{{ match.cover_letter }}</pre>
+            </td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

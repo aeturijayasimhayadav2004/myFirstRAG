@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h2>Welcome {{ user.email }}</h2>
+    <div class="stats">
+        <div class="stat">Matches: {{ stats.matches }}</div>
+        <div class="stat">Applications today: {{ stats.applications_today }}</div>
+        <div class="stat">Resume uploaded: {{ 'Yes' if stats.resume_uploaded else 'No' }}</div>
+    </div>
+</section>
+{% endblock %}
