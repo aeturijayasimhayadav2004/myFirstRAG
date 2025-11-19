@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h2>Job Preferences</h2>
+    <form method="post" action="/preferences">
+        <label>Preferred Titles <input type="text" name="preferred_titles" value="{{ prefs.preferred_titles if prefs else '' }}" /></label>
+        <label>Locations <input type="text" name="locations" value="{{ prefs.locations if prefs else '' }}" /></label>
+        <label>Remote Only <input type="checkbox" name="remote_only" {% if prefs and prefs.remote_only %}checked{% endif %} /></label>
+        <label>Job Type <input type="text" name="job_type" value="{{ prefs.job_type if prefs else '' }}" /></label>
+        <label>Minimum Salary <input type="number" name="min_salary" value="{{ prefs.min_salary if prefs else '' }}" /></label>
+        <label>Auto Apply <input type="checkbox" name="auto_apply_enabled" {% if prefs and prefs.auto_apply_enabled %}checked{% endif %} /></label>
+        <label>Max Applications/Day <input type="number" name="max_applications_per_day" value="{{ prefs.max_applications_per_day if prefs else '3' }}" /></label>
+        <label>Providers Enabled <input type="text" name="providers_enabled" value="{{ prefs.providers_enabled if prefs else 'linkedin,indeed,naukri' }}" /></label>
+        <button type="submit">Save Preferences</button>
+    </form>
+</section>
+{% endblock %}
