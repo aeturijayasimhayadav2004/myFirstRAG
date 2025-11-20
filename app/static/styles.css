@@ -1,0 +1,11 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
+header { background: #1f2933; color: #fff; padding: 1rem; }
+nav a { color: #fff; margin-right: 1rem; text-decoration: none; }
+main { padding: 1rem; }
+.panel { background: #fff; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 0.5rem; }
+th { background: #eee; }
+.stats { display: flex; gap: 1rem; }
+.stat { background: #222; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; }
+pre { background: #f1f1f1; padding: 0.5rem; overflow-x: auto; }

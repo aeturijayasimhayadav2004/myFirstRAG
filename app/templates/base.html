@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ title or 'RAG Job Matcher' }}</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<header>
+    <h1>RAG Job Matcher</h1>
+    {% if user %}
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/resume">Resume</a>
+        <a href="/preferences">Preferences</a>
+        <a href="/jobs/matches">Matches</a>
+        <a href="/applications">Applications</a>
+    </nav>
+    {% endif %}
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

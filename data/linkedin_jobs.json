@@ -1,0 +1,11 @@
+[
+  {
+    "external_job_id": "li-101",
+    "title": "Senior FastAPI Engineer",
+    "company": "BlueSky Networks",
+    "location": "Remote",
+    "url": "https://linkedin.example/li-101",
+    "description": "Lead backend development with FastAPI and vector databases.",
+    "posted_at": "2024-05-01T00:00:00"
+  }
+]
