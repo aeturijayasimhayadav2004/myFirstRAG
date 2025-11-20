@@ -5,16 +5,19 @@ from typing import Iterable, List
 from sqlalchemy.orm import Session
 
 from .. import models
+from ..config import get_settings
 from ..providers.indeed import IndeedProvider
 from ..providers.linkedin import LinkedInProvider
 from ..providers.naukri import NaukriProvider
 from ..rag.job_indexer import index_jobs
 from ..rag.matcher import match_jobs_for_user
 
+settings = get_settings()
+
 PROVIDERS = {
-    "linkedin": LinkedInProvider(),
-    "indeed": IndeedProvider(),
-    "naukri": NaukriProvider(),
+    "linkedin": LinkedInProvider(api_key=settings.linkedin_api_key or None),
+    "indeed": IndeedProvider(api_key=settings.indeed_api_key or None),
+    "naukri": NaukriProvider(api_key=settings.naukri_api_key or None),
 }
 
 

@@ -1,6 +1,6 @@
 # RAG Job Matcher
 
-An experimental Retrieval Augmented Generation (RAG) demo that ingests resumes, fetches mock job postings from LinkedIn/Indeed/Naukri providers, runs similarity-based matching, and simulates auto-applications. Built with FastAPI, SQLAlchemy, and a lightweight FAISS-compatible vector index.
+An experimental Retrieval Augmented Generation (RAG) demo that ingests resumes, fetches mock job postings from LinkedIn/Indeed/Naukri providers (with optional real API credentials), runs similarity-based matching, and simulates auto-applications. Built with FastAPI, SQLAlchemy, and a lightweight FAISS-compatible vector index.
 
 ## Features
 - Email/password auth with JWT cookies.
@@ -46,7 +46,7 @@ curl -X POST http://localhost:8000/auth/register \
 art automatically once the FastAPI app is running.
 
 ## Mock Data
-JSON fixtures located in `data/` power the providers:
+JSON fixtures located in `data/` power the providers when no API keys are supplied:
 - `data/linkedin_jobs.json`
 - `data/indeed_jobs.json`
 - `data/naukri_jobs.json`
@@ -54,6 +54,23 @@ JSON fixtures located in `data/` power the providers:
 Feel free to edit or extend them to experiment with new postings.
 
 ## Notes
-- Providers are **mock implementations**. No real LinkedIn/Indeed/Naukri API calls are made.
+- Providers default to **mock implementations**, but you can inject real credentials via environment variables and swap the provider logic without changing the service layer: `LINKEDIN_API_KEY`, `INDEED_API_KEY`, and `NAUKRI_API_KEY` map to the settings fields in `app/config.py`.
 - Embeddings are deterministic hash-based vectors so the project runs offline without heavy dependencies.
 - The background scheduler uses APScheduler with an in-process job. Adjust intervals via `app/config.py`.
+- Optional: install `faiss-cpu` to use a native FAISS index (otherwise the in-memory Python fallback is used):
+
+```bash
+pip install faiss-cpu
+```
+
+## Deployment quick tips
+- Set `SECRET_KEY` and, if desired, `DATABASE_URL` environment variables before starting Uvicorn (defaults use SQLite in the repo root).
+- Use `uvicorn app.main:app --host 0.0.0.0 --port 8000` behind a process manager (e.g., systemd) or container entrypoint for long-running deployments.
+- Static files are served from `/static`; ensure that directory is present in the deployment image/package.
+
+## Tests
+Run the smoke test suite from the repository root to ensure imports and scheduler wiring stay healthy:
+
+```bash
+pytest
+```

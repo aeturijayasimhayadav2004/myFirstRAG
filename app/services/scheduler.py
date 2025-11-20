@@ -46,5 +46,16 @@ def _job_runner():
 def start_scheduler():
     if scheduler.running:
         return
-    scheduler.add_job(_job_runner, "interval", seconds=settings.scheduler_interval_seconds, id="job-runner", replace_existing=True)
+    scheduler.add_job(
+        _job_runner,
+        "interval",
+        seconds=settings.scheduler_interval_seconds,
+        id="job-runner",
+        replace_existing=True,
+    )
     scheduler.start()
+
+
+def shutdown_scheduler():
+    if scheduler.running:
+        scheduler.shutdown(wait=False)

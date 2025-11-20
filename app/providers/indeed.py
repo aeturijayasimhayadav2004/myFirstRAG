@@ -13,6 +13,7 @@ class IndeedProvider(JobProvider):
     name = "indeed"
 
     def search_jobs(self, preferences: dict, page: int = 1) -> List[dict]:  # noqa: ARG002
+        # Ready for real API integration when api_key is configured; defaults to mock data.
         if DATA_PATH.exists():
             with DATA_PATH.open() as f:
                 jobs = json.load(f)

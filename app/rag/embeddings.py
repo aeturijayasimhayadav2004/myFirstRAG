@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import importlib
+import importlib.util
 from typing import List, Tuple
 
 import numpy as np
@@ -9,10 +11,8 @@ from ..config import get_settings
 
 settings = get_settings()
 
-try:
-    import faiss  # type: ignore
-except ImportError:  # pragma: no cover
-    faiss = None
+faiss_spec = importlib.util.find_spec("faiss")
+faiss = importlib.import_module("faiss") if faiss_spec else None  # type: ignore
 
 _index = None
 _id_map: list[int] = []
@@ -38,6 +38,18 @@ def embed_text(text: str) -> np.ndarray:
     vector = tiled.astype("float32")
     norm = np.linalg.norm(vector) or 1.0
     return vector / norm
+
+
+def blend_vectors(segments: list[str]) -> np.ndarray:
+    """Average multiple text segments to smooth noisy inputs."""
+
+    valid_segments = [seg for seg in segments if seg]
+    if not valid_segments:
+        return embed_text("")
+    vectors = [embed_text(seg) for seg in valid_segments]
+    mean = np.mean(np.stack(vectors, axis=0), axis=0)
+    norm = np.linalg.norm(mean) or 1.0
+    return mean / norm
 
 
 def init_index():

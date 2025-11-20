@@ -1,21 +1,27 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, EmailStr, constr
+from pydantic import BaseModel, constr
+
+# Lightweight email validation to avoid the optional email_validator dependency
+try:
+    EmailField = constr(regex=r"[^@\s]+@[^@\s]+\.[^@\s]+")
+except TypeError:  # Pydantic v2 uses `pattern` instead of `regex`
+    EmailField = constr(pattern=r"[^@\s]+@[^@\s]+\.[^@\s]+")
 
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    email: EmailField
     password: constr(min_length=6)
 
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email: EmailField
     password: str
 
 
 class UserOut(BaseModel):
     id: int
-    email: EmailStr
+    email: EmailField
     created_at: datetime
 
     class Config:

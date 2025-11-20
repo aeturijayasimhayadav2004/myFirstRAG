@@ -13,7 +13,7 @@ from .auth import create_access_token, get_current_user, verify_password
 from .config import get_settings
 from .db import Base, engine, get_db
 from .routes import applications, jobs, preferences, resume, users
-from .services.scheduler import start_scheduler
+from .services.scheduler import shutdown_scheduler, start_scheduler
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +32,11 @@ app.include_router(applications.router)
 @app.on_event("startup")
 def _startup():
     start_scheduler()
+
+
+@app.on_event("shutdown")
+def _shutdown():
+    shutdown_scheduler()
 
 
 @app.get("/")

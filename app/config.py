@@ -1,5 +1,12 @@
 from functools import lru_cache
-from pydantic import BaseSettings
+
+try:  # Pydantic v2 ships BaseSettings in pydantic-settings
+    from pydantic_settings import BaseSettings
+except Exception:  # pragma: no cover - fallback for pydantic v1 or the v2 compatibility shim
+    try:
+        from pydantic import BaseSettings  # type: ignore
+    except Exception:  # pragma: no cover
+        from pydantic.v1 import BaseSettings  # type: ignore
 
 
 class Settings(BaseSettings):
@@ -10,6 +17,9 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./jobrag.db"
     scheduler_interval_seconds: int = 60
     embedding_dim: int = 128
+    linkedin_api_key: str = ""
+    indeed_api_key: str = ""
+    naukri_api_key: str = ""
 
 
 @lru_cache

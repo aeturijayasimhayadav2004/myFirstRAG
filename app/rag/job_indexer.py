@@ -4,7 +4,7 @@ from typing import Iterable
 from sqlalchemy.orm import Session
 
 from .. import models
-from .embeddings import embed_text, add_vector
+from .embeddings import add_vector, blend_vectors
 
 
 def index_jobs(db: Session, jobs: Iterable[dict], source: models.JobSource) -> list[models.JobPosting]:
@@ -15,7 +15,14 @@ def index_jobs(db: Session, jobs: Iterable[dict], source: models.JobSource) -> l
             .filter(models.JobPosting.external_job_id == job["external_job_id"], models.JobPosting.source_id == source.id)
             .first()
         )
-        vector = embed_text(job.get("description", ""))
+        vector = blend_vectors(
+            [
+                job.get("title", ""),
+                job.get("company", ""),
+                job.get("location", ""),
+                job.get("description", ""),
+            ]
+        )
         posted_at_value = job.get("posted_at")
         if isinstance(posted_at_value, str):
             try:
