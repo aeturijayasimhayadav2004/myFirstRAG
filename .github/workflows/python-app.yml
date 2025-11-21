@@ -37,3 +37,17 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production..."
+          # Add your deployment commands here, e.g.:
+          # heroku container:push web -a my-app
+          # heroku container:release web -a my-app
+          echo "Deployment complete (simulated)."

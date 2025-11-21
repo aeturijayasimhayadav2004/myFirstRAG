@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./jobrag.db
+      - SECRET_KEY=dev-secret-key-change-in-prod
+      # Add other API keys here as needed
+      # - LINKEDIN_API_KEY=...
+    volumes:
+      - .:/app
+    restart: always
+
+  # Uncomment the following to use PostgreSQL instead of SQLite
+  # db:
+  #   image: postgres:13
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=password
+  #     - POSTGRES_DB=jobrag
+  #   ports:
+  #     - "5432:5432"
+
+# volumes:
+#   postgres_data:
