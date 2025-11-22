@@ -14,6 +14,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Default to emulator localhost, can be overridden by -PbackendUrl="..."
+        buildConfigField "String", "BASE_URL", "\"${project.findProperty("backendUrl") ?: "http://10.0.2.2:8000/"}\""
     }
 
     signingConfigs {

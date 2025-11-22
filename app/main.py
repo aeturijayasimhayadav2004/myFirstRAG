@@ -41,6 +41,8 @@ app.include_router(applications.router)
 
 @app.on_event("startup")
 def _startup():
+    if settings.secret_key == "super-secret-key":
+        print("WARNING: You are using the default SECRET_KEY. This is insecure for production!")
     start_scheduler()
 
 
