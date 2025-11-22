@@ -27,7 +27,7 @@ jobs:
     - name: Build with Gradle
       run: |
         cd android_client
-        gradle assembleRelease
+        gradle assembleRelease -PbackendUrl="https://myfirstrag-5.onrender.com/"
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
