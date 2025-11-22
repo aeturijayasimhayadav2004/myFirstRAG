@@ -24,7 +24,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For production, replace with specific origins
+    allow_origins=["*"],  # WARNING: In production, replace ["*"] with your specific frontend domain (e.g., ["https://your-app.onrender.com"])
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

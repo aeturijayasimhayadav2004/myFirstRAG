@@ -37,7 +37,8 @@ class DashboardActivity : AppCompatActivity() {
                         findViewById<TextView>(R.id.tvApplications).text = "Applications Today: ${stats.applications_today}"
                         findViewById<TextView>(R.id.tvResumeStatus).text = "Resume Uploaded: ${if (stats.resume_uploaded) "Yes" else "No"}"
                     } else {
-                        Toast.makeText(this@DashboardActivity, "Failed to load dashboard", Toast.LENGTH_SHORT).show()
+                        val errorMsg = response.errorBody()?.string() ?: "Unknown error"
+                        Toast.makeText(this@DashboardActivity, "Failed to load dashboard: $errorMsg", Toast.LENGTH_LONG).show()
                     }
                 }
             } catch (e: Exception) {
